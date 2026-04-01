@@ -56,17 +56,17 @@ Kenji: I found 3 flights from LAX → NRT...
 The agent uses Claude's tool-use API in a loop — Claude decides when to call each tool, interprets results, and generates responses. Each turn allows up to 8 tool calls before forcing a response to prevent runaway loops.
 
 ```mermaid
-flowchart TD
-    A[User Input] --> B[Claude\nclaude-3-5-sonnet]
-    B -->|tool_use| C[search_flights]
-    B -->|tool_use| D[search_hotels]
-    B -->|tool_use| E[search_airbnbs]
-    B -->|tool_use| F[compare_chase_points]
-    C -->|tool_result| B
-    D -->|tool_result| B
-    E -->|tool_result| B
-    F -->|tool_result| B
-    B --> G[Response to User]
+sequenceDiagram
+    participant U as User
+    participant C as Claude (claude-3-5-sonnet)
+    participant T as Tools
+
+    U->>C: message
+    loop tool calls
+        C->>T: tool_use (search_flights, search_hotels, search_airbnbs, compare_chase_points)
+        T->>C: tool_result
+    end
+    C->>U: response
 ```
 
 ## Notes
