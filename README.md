@@ -55,16 +55,15 @@ Kenji: I found 3 flights from LAX → NRT...
 
 The agent uses Claude's tool-use API in a loop — Claude decides when to call each tool, interprets results, and generates responses. Each turn allows up to 8 tool calls before forcing a response to prevent runaway loops.
 
-```
-User input
-    │
-    ▼
-Claude (claude-3-5-sonnet) ──── tool_use ──→ search_flights()
-    │                                         search_hotels()
-    │                       ◄── tool_result ─ search_airbnbs()
-    │                                         compare_chase_points()
-    ▼
-Response to user
+```mermaid
+flowchart TD
+    A[User Input] --> B[Claude\nclaude-3-5-sonnet]
+    B -->|tool_use| C[search_flights]
+    B -->|tool_use| D[search_hotels]
+    B -->|tool_use| E[search_airbnbs]
+    B -->|tool_use| F[compare_chase_points]
+    C & D & E & F -->|tool_result| B
+    B --> G[Response to User]
 ```
 
 ## Notes
