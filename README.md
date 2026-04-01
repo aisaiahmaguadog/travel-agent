@@ -62,7 +62,10 @@ flowchart TD
     B -->|tool_use| D[search_hotels]
     B -->|tool_use| E[search_airbnbs]
     B -->|tool_use| F[compare_chase_points]
-    C & D & E & F -->|tool_result| B
+    C -->|tool_result| B
+    D -->|tool_result| B
+    E -->|tool_result| B
+    F -->|tool_result| B
     B --> G[Response to User]
 ```
 
